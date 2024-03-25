@@ -1,9 +1,9 @@
 import './App.css';
-import Docs from './components/Docs';
+import Docs from './components/RefinedForm';
 function App() {
   return (
     <>
-    <Docs/>
+    <RefinedForm/>
     </>
   );
 }

@@ -84,7 +84,7 @@ const InputLabel = (props) => {
       />
       <i className="ri-checkbox-circle-fill absolute top-[50%] left-[95%] text-green-600 font-bold text-xl" style={props.validity[props.name] ?{opacity:1}:{opacity:0}}></i>
       <i className="ri-close-circle-fill absolute top-[50%] left-[95%] text-red-600  font-bold text-xl" style={props.validity[props.name] ?{opacity:0}:{opacity:1}}></i>
-      <div className='text-[1vw] capitalize text-red-600' style={props.validity[props.name] ?{opacity:0}:{opacity:1}}>{props.errMsg}</div>
+      <div className='text-xl capitalize text-red-600' style={props.validity[props.name] ?{opacity:0}:{opacity:1}}>{props.errMsg}</div>
     </label>
   );
 };

@@ -73,9 +73,9 @@ const RefinedForm = () => {
 
 const InputLabel = (props) => {
   return (
-    <label className=' float-left mr-3 w-[23%] p-3 flex flex-col relative'>
+    <label className=' float-left mr-3 w-[250px] p-3 flex flex-col relative'>
       <div className='text-2xl capitalize' style={props.validity[props.name] ?{color:"green"}:{color:"red"}}>{props.name}:</div>
-      <input className=' w-[95%] mt-3 h-fit border-2 border-black p-2 text-lg outline-none'
+      <input className=' w-[95%] mt-3 h-fit  rounded border-2 border-black p-2 text-lg outline-none'
         type={props.type}
         name={props.name}
         value={props.formData[props.name]}

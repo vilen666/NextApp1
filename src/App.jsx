@@ -1,5 +1,5 @@
 import './App.css';
-import Docs from './components/RefinedForm';
+import RefinedForm from './components/RefinedForm';
 function App() {
   return (
     <>

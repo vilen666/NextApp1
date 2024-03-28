@@ -56,16 +56,17 @@ const RefinedForm = () => {
         return false;
     }};
   return (
-    <div className='bg-[#D9EDBF] w-[90%] rounded h-[90vh] my-[5vh] mx-[auto] block overflow-hidden'>
+    <div className='bg-[#D9EDBF] relative w-[90%] rounded h-[90vh] my-[5vh] mx-[auto] block overflow-hidden'>
       <div className='bg-[#2C7865] w-full h-[10%] text-center text-[#FF9800] text-3xl font-bold py-[10px]'>
         Supratim's form
       </div>
-      <form >
+      <form className=' block h-fit bg-black '>
       <InputLabel type={"email"} validity={validity} handleSubmit={handleSubmit} validateInput={validateInput} name={"email"} formData={formData} handleChange={handleChange} place={"Enter Your email"} errMsg={"Enter correct email..."}/>
       <InputLabel type={"text"} validity={validity} handleSubmit={handleSubmit} validateInput={validateInput} name={"firstName"} formData={formData} handleChange={handleChange} place={"Enter Your firstName"} errMsg={"Enter correct name..."}/>
       <InputLabel type={"text"} validity={validity} handleSubmit={handleSubmit} validateInput={validateInput} name={"lastName"} formData={formData} handleChange={handleChange} place={"Enter Your lastName"} errMsg={"Enter correct name..."}/>
       <InputLabel type={"text"} validity={validity} handleSubmit={handleSubmit} validateInput={validateInput} name={"phoneNo"} formData={formData} handleChange={handleChange} place={"Enter Your Phone No."} errMsg={"Enter 10 digit phone no."}/>
       <InputLabel type={"date"} validity={validity} handleSubmit={handleSubmit} validateInput={validateInput} name={"dob"} formData={formData} handleChange={handleChange} place={"Enter Your DOB"} errMsg={"Your age must be > 18..."}/>
+      <button type='submit' className=' p-2 rounded absolute border-2 border-blue-600 bg-slate-500 bottom-[5%] translate-x-[-50%] translate-y-[-50%] left-[50%]  ' onSubmit={(e)=>{alert(e)}}> Click to submit </button>
       </form>
     </div>
   );

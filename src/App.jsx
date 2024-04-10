@@ -1,9 +1,11 @@
 import './App.css';
-import RefinedForm from './components/RefinedForm';
+import Ardent from './components/Ardent/Ardent';
+import Test from './test';
 function App() {
   return (
     <>
-    <RefinedForm/>
+    <Ardent/>
+    {/* <Test/> */}
     </>
   );
 }

@@ -1,0 +1,6 @@
+@media only screen and (max-width: 768px) {
+   #cards {
+      height: 80vh;
+      margin: auto;
+   }
+}

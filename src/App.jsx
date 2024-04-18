@@ -1,10 +1,12 @@
 import './App.css';
-import Ardent from './components/Ardent/Ardent';
-import AnimatedText from './components/AnimatedText';
+import {MouseFollower } from './components/SupraComponents';
 function App() {
   return (
     <>
-    <Ardent/>
+    {/* <AnimatedText once={true} text="Supratim" className=' text-5xl font-bold inline-block'/> */}
+    <div className=' w-full h-screen flex justify-center items-center'>
+      <MouseFollower/>
+    </div>
     </>
   );
 }

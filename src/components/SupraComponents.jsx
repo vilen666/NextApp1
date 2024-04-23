@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { motion, useInView, useAnimation, useSpring, useMotionValue, transform, animate } from 'framer-motion';
 
 const imgs = ["https://plus.unsplash.com/premium_photo-1709713745213-73c582d9284b?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "https://images.unsplash.com/photo-1712839398257-8f7ee9127998?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "https://images.unsplash.com/photo-1712781797301-ec9ee12b52b4?q=80&w=1858&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"]
 const AnimatedText = ({ text = "ok", once = false, className = "text-left text-nowrap text-4xl font-bold",
@@ -95,30 +95,65 @@ const ImageSlider = ({ images = imgs, className = "h-[200px] w-[400px] bg-slate-
         </div>
     );
 };
-const MouseFollower = () => {
-    const [mousePosition, setMousePosition] = useState({
-        x: 0,
-        y: 0
-      });
-    
-    
-      useEffect(() => {
-        const mouseMove = e => {
-          setMousePosition({
-            x: e.clientX,
-            y: e.clientY
-          })
+const MouseFollower = ({ color = "#0f1b38" }) => {
+    const b = useRef(null)
+    const cursor = useRef(null)
+    const prevMouse = useRef({ x: useMotionValue(0), y: useMotionValue(0) });
+    const mousePos = {
+        x: useMotionValue(0),
+        y: useMotionValue(0)
+    }
+    const center = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
+    const smoothOptions = { stiffness: 200, damping: 20,mass:0.5}
+    const springPos = {
+        x: useSpring(mousePos.x, smoothOptions),
+        y: useSpring(mousePos.y, smoothOptions)
+    }
+    const scaler = {
+        scaleX: useMotionValue(1),
+        scaleY: useMotionValue(1)
+    }
+    useEffect(() => {
+        function MouseHandle(e) {
+            clearTimeout(b.current)
+            console.log(color)
+            prevMouse.current.x.set(mousePos.x.get());
+            prevMouse.current.y.set(mousePos.y.get());
+            setTimeout(()=>
+        {
+            mousePos.x.set((e.x-6))
+            mousePos.y.set((e.y-6))
+        },0)
+            let distance = { x: Math.abs(prevMouse.current.x.get() - mousePos.x.get()), y: Math.abs(prevMouse.current.y.get() - mousePos.y.get()) }
+            let angle = Math.atan2(e.y - center.y, e.x - center.x);
+            animate(cursor.current, { rotate: `${angle}rad` }, { duration: 0 })
+            scaler.scaleX.set(transform(distance.x, [0,1], [0.8, 1.1]))
+            scaler.scaleY.set(transform(distance.y, [0, 1], [0.8, 1.1]))
+            console.log(scaler.scaleX.get(), distance)
+            b.current = setTimeout(() => {
+            animate(cursor.current, { scaleX: 1,scaleY:1 }, { duration: 0.5 })
+                scaler.scaleX.set(1)
+                scaler.scaleY.set(1)
+            }, 300)
         }
-    
-        window.addEventListener("mousemove", mouseMove);
-    
+        window.addEventListener("mousemove", MouseHandle)
         return () => {
-          window.removeEventListener("mousemove", mouseMove);
+            window.removeEventListener("mousemove", MouseHandle)
         }
-      }, []);
+    }, []);
     return (
-        <motion.div className=' absolute w-4 h-4 rounded-full bg-black top-0 left-0 pointer-events-none ' transition={{ duration: 0.8, type: "spring" }} animate={{ x: mousePosition.x, y: mousePosition.y }}>
-        </motion.div>
+        <motion.div className={`rounded-full w-3 h-3 absolute inline`}
+        ref={cursor}
+            style={{
+                zIndex:999999,
+                backgroundColor:`${color}`,
+                // x:mousePos.x,
+                // y:mousePos.y,
+                x: springPos.x,
+                y: springPos.y,
+                scaleX: scaler.scaleX,
+                scaleY: scaler.scaleY,
+            }} />
     )
 }
 export { imgs, AnimatedText, ImageSlider, MouseFollower };
